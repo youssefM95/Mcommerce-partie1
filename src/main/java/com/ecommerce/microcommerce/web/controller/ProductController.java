@@ -27,7 +27,16 @@ public class ProductController {
     @Autowired
     private ProductDao productDao;
 
-
+    @RequestMapping(value = "AdminProduits",method = RequestMethod.GET)
+    public String calculerMargeProduit()
+    {
+        String out="";
+        List<Product> products = productDao.findAll();
+        for (Product product : products) {
+            out+="Product{id="+product.getId()+", nom="+product.getNom()+", prix="+product.getPrix()+"}:"+(product.getPrix()-product.getPrixAchat())+"\n";
+        }
+        return out;
+        }
     //Récupérer la liste des produits
 
     @RequestMapping(value = "/Produits", method = RequestMethod.GET)
