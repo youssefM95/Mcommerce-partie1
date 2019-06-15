@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,13 @@ public class ProductController {
             out+="Product{id="+product.getId()+", nom="+product.getNom()+", prix="+product.getPrix()+"}:"+(product.getPrix()-product.getPrixAchat())+"\n";
         }
         return out;
+        }
+
+        @RequestMapping(value = "/ProduitsTrie",method = RequestMethod.GET)
+
+        public List<Product> trierProduitsParOrdreAlphabetique()
+        {
+            return productDao.findAll(new Sort(Sort.Direction.ASC,"nom"));
         }
     //Récupérer la liste des produits
 
